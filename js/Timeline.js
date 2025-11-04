@@ -53,7 +53,6 @@ export class Timeline {
             () => this.hideTooltip()
         );
         this.renderer.updateZoomInfo(this.scale);
-        this.renderer.updateStats(this.scale, this.offsetX);
     }
 
     showTooltip(event, period, mouseEvent) {
@@ -69,30 +68,36 @@ export class Timeline {
         this.tooltip.style.display = 'block';
         
         const rect = mouseEvent.target.getBoundingClientRect();
-        const containerRect = this.timelineCanvas.getBoundingClientRect();
         const tooltipWidth = this.tooltip.offsetWidth;
         const tooltipHeight = this.tooltip.offsetHeight;
         
-        // Center horizontally relative to event
-        let left = rect.left - containerRect.left + rect.width / 2 - tooltipWidth / 2;
+        const screenWidth = window.innerWidth;
+        const eventCenterX = rect.left + rect.width / 2;
+        const eventCenterY = rect.top + rect.height / 2;
         
-        // Position above event
-        let top = rect.top - containerRect.top - tooltipHeight - 15;
+        let left, top;
         
-        // Keep within horizontal bounds
-        if (left < 10) left = 10;
-        if (left + tooltipWidth > containerRect.width - 10) {
-            left = containerRect.width - tooltipWidth - 10;
+        // Проверяем где больше места - справа или слева от события
+        const spaceOnRight = screenWidth - rect.right;
+        const spaceOnLeft = rect.left;
+        
+        if (spaceOnRight >= spaceOnLeft) {
+            // Показываем справа
+            left = rect.right + 15;
+        } else {
+            // Показываем слева
+            left = rect.left - tooltipWidth - 15;
         }
         
-        // If doesn't fit above, show below
-        if (top < 10) {
-            top = rect.bottom - containerRect.top + 15;
-        }
+        // Центрируем по вертикали относительно события
+        top = eventCenterY - tooltipHeight / 2;
         
-        // If doesn't fit below either, show centered
-        if (top + tooltipHeight > containerRect.height - 10) {
-            top = (containerRect.height - tooltipHeight) / 2;
+        // Проверка чтобы не вылез за верхний край экрана
+        if (top < 10) top = 10;
+        
+        // Проверка чтобы не вылез за нижний край экрана
+        if (top + tooltipHeight > window.innerHeight - 10) {
+            top = window.innerHeight - tooltipHeight - 10;
         }
         
         this.tooltip.style.left = left + 'px';

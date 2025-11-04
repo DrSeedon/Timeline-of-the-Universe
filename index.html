@@ -15,48 +15,35 @@
             <button class="btn" id="zoomOut">🔍 Отдалить</button>
             <button class="btn reset" id="reset">↺ Сброс</button>
         </div>
-        <div class="controls period-buttons" id="periodButtons">
-            <!-- Кнопки будут добавлены через JS -->
-        </div>
         <div class="hint">
             💡 <strong>Управление:</strong> Тяни мышкой для перемещения | Колесико для зума | Клик на событие для деталей
             <span id="zoomInfo" style="margin-left: 20px; color: #667eea; font-weight: 600;"></span>
         </div>
     </div>
 
-            <div class="timeline-wrapper">
-                <div class="timeline-canvas" id="timelineCanvas">
-                    <canvas id="canvas"></canvas>
-                    <div class="timeline-content" id="timelineContent">
-                        <!-- События будут добавлены через JS -->
-                    </div>
-                    
-                    <!-- Tooltip -->
-                    <div class="tooltip" id="tooltip">
-                        <div class="tooltip-icon"></div>
-                        <h4 class="tooltip-title"></h4>
-                        <p class="tooltip-year"></p>
-                        <p class="tooltip-description"></p>
-                    </div>
-                    
-                    <!-- Stats Panel -->
-                    <div class="stats-panel" id="statsPanel">
-                        <div class="stats-header">📊 Статистика</div>
-                        <div class="stats-item">
-                            <span class="stats-label">События:</span>
-                            <span class="stats-value" id="statsEvents">0</span>
-                        </div>
-                        <div class="stats-item">
-                            <span class="stats-label">Эпохи:</span>
-                            <span class="stats-value" id="statsPeriods">0</span>
-                        </div>
-                        <div class="stats-item">
-                            <span class="stats-label">Диапазон:</span>
-                            <span class="stats-value" id="statsRange">0</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="timeline-wrapper">
+        <div class="timeline-canvas" id="timelineCanvas">
+            <canvas id="canvas"></canvas>
+            <div class="timeline-content" id="timelineContent">
+                <!-- События будут добавлены через JS -->
             </div>
+            
+            <!-- Tooltip -->
+            <div class="tooltip" id="tooltip">
+                <div class="tooltip-icon"></div>
+                <h4 class="tooltip-title"></h4>
+                <p class="tooltip-year"></p>
+                <p class="tooltip-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="periods-section">
+        <h3 class="periods-title">🎯 Быстрый переход к периодам</h3>
+        <div class="controls period-buttons" id="periodButtons">
+            <!-- Кнопки будут добавлены через JS -->
+        </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
 </body>

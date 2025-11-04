@@ -15,7 +15,7 @@ body {
 .header {
     background: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 20px 30px;
     text-align: center;
     position: sticky;
     top: 0;
@@ -73,47 +73,52 @@ body {
 }
 
 .period-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
     max-width: 100%;
 }
 
 .period-group {
     background: rgba(102, 126, 234, 0.05);
-    border-radius: 12px;
-    padding: 12px 15px;
-    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 8px;
+    border-top: 2px solid #667eea;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .period-group-title {
-    font-size: 0.9em;
+    font-size: 0.7em;
     font-weight: 700;
     color: #667eea;
-    margin-bottom: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    text-align: center;
+    margin-bottom: 3px;
 }
 
 .period-buttons-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .period-btn {
-    font-size: 0.8em;
-    padding: 8px 14px;
+    font-size: 0.65em;
+    padding: 5px 8px;
     white-space: nowrap;
-    border-radius: 8px;
+    border-radius: 5px;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     font-weight: 600;
+    text-align: center;
 }
 
 .period-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .hint {
@@ -123,14 +128,29 @@ body {
 }
 
 .timeline-wrapper {
-    height: 400px;
-    max-height: 50vh;
+    height: 280px;
     overflow: hidden;
     position: relative;
     background: white;
-    margin: 20px;
+    margin: 15px 20px;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.periods-section {
+    background: white;
+    margin: 15px 20px 20px;
+    padding: 12px 15px 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.periods-title {
+    font-size: 1em;
+    color: #667eea;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 700;
 }
 
 .timeline-canvas {
@@ -219,16 +239,16 @@ body {
 
 /* Tooltip */
 .tooltip {
-    position: absolute;
+    position: fixed;
     background: rgba(0, 0, 0, 0.92);
     color: white;
     padding: 15px 20px;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     pointer-events: none;
-    z-index: 1000;
+    z-index: 10000;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease;
     max-width: 350px;
     min-width: 250px;
@@ -237,7 +257,7 @@ body {
 
 .tooltip.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .tooltip-icon {
@@ -266,51 +286,6 @@ body {
     color: #cbd5e0;
 }
 
-/* Stats Panel */
-.stats-panel {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    z-index: 100;
-}
-
-.stats-header {
-    font-weight: 700;
-    font-size: 0.95em;
-    color: #667eea;
-    margin-bottom: 12px;
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 8px;
-}
-
-.stats-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0;
-}
-
-.stats-label {
-    font-size: 0.85em;
-    color: #666;
-    font-weight: 500;
-}
-
-.stats-value {
-    font-size: 0.95em;
-    color: #2c3e50;
-    font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 .period-label-top {
     position: absolute;
@@ -341,17 +316,37 @@ body {
     }
 
     .timeline-wrapper {
-        height: 350px;
-        max-height: 40vh;
+        height: 400px;
+        max-height: 50vh;
         margin: 10px;
     }
     
+    .periods-section {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .periods-title {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+    
+    .period-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
     .period-group {
-        padding: 10px 12px;
+        padding: 8px;
     }
     
     .period-group-title {
-        font-size: 0.8em;
+        font-size: 0.7em;
+    }
+    
+    .period-btn {
+        font-size: 0.65em;
+        padding: 5px 8px;
     }
 
     .event-label {
@@ -381,25 +376,6 @@ body {
         padding: 10px;
     }
     
-    .stats-panel {
-        top: 10px;
-        right: 10px;
-        padding: 10px 15px;
-        min-width: 160px;
-        font-size: 0.9em;
-    }
-    
-    .stats-header {
-        font-size: 0.85em;
-    }
-    
-    .stats-label {
-        font-size: 0.75em;
-    }
-    
-    .stats-value {
-        font-size: 0.85em;
-    }
     
     .tooltip {
         max-width: calc(100vw - 40px);
@@ -431,32 +407,42 @@ body {
     }
     
     .timeline-wrapper {
-        height: 300px;
-        max-height: 35vh;
+        height: 350px;
+        max-height: 45vh;
+    }
+    
+    .periods-section {
+        margin: 10px;
+        padding: 12px;
+    }
+    
+    .periods-title {
+        font-size: 1em;
+        margin-bottom: 12px;
     }
     
     .period-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
         max-height: 180px;
         overflow-y: auto;
     }
     
     .period-group {
-        padding: 8px 10px;
+        padding: 6px 8px;
+    }
+    
+    .period-group-title {
+        font-size: 0.65em;
     }
     
     .period-buttons-row {
-        gap: 6px;
+        gap: 3px;
     }
     
     .period-btn {
-        font-size: 0.75em;
-        padding: 6px 10px;
-    }
-    
-    .stats-panel {
-        position: static;
-        margin: 10px;
-        width: calc(100% - 20px);
+        font-size: 0.6em;
+        padding: 4px 6px;
     }
 }
 

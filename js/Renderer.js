@@ -258,8 +258,8 @@ export class Renderer {
             marker.appendChild(label);
             marker.appendChild(yearLabel);
             
-            marker.addEventListener('mouseenter', (e) => onEventEnter(event, period, e));
-            marker.addEventListener('mouseleave', onEventLeave);
+            dot.addEventListener('mouseenter', (e) => onEventEnter(event, period, e));
+            dot.addEventListener('mouseleave', onEventLeave);
             
             fragment.appendChild(marker);
             eventCount++;
@@ -267,33 +267,6 @@ export class Renderer {
         
         timelineContent.innerHTML = '';
         timelineContent.appendChild(fragment);
-    }
-
-    updateStats(scale, offsetX) {
-        const leftYear = this.xToYear(0, scale, offsetX);
-        const rightYear = this.xToYear(this.canvas.width, scale, offsetX);
-        
-        const visibleEvents = events.filter(e => e.year >= leftYear && e.year <= rightYear).length;
-        const visiblePeriods = historicalPeriods.filter(p => 
-            p.end >= leftYear && p.start <= rightYear
-        ).length;
-        
-        const rangeYears = Math.abs(rightYear - leftYear);
-        let rangeText;
-        
-        if (rangeYears >= 1000000000) {
-            rangeText = (rangeYears / 1000000000).toFixed(1) + ' млрд лет';
-        } else if (rangeYears >= 1000000) {
-            rangeText = (rangeYears / 1000000).toFixed(1) + ' млн лет';
-        } else if (rangeYears >= 1000) {
-            rangeText = (rangeYears / 1000).toFixed(1) + ' тыс. лет';
-        } else {
-            rangeText = Math.round(rangeYears) + ' лет';
-        }
-        
-        document.getElementById('statsEvents').textContent = visibleEvents;
-        document.getElementById('statsPeriods').textContent = visiblePeriods;
-        document.getElementById('statsRange').textContent = rangeText;
     }
 
     updateZoomInfo(scale) {
