@@ -73,19 +73,47 @@ body {
 }
 
 .period-buttons {
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     max-width: 100%;
+}
+
+.period-group {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 12px;
+    padding: 12px 15px;
+    border-left: 4px solid #667eea;
+}
+
+.period-group-title {
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.period-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
 .period-btn {
-    font-size: 0.85em;
+    font-size: 0.8em;
     padding: 8px 14px;
     white-space: nowrap;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
 }
 
 .period-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
 .hint {
@@ -95,7 +123,8 @@ body {
 }
 
 .timeline-wrapper {
-    height: calc(100vh - 480px);
+    height: 400px;
+    max-height: 50vh;
     overflow: hidden;
     position: relative;
     background: white;
@@ -312,8 +341,17 @@ body {
     }
 
     .timeline-wrapper {
-        height: calc(100vh - 550px);
+        height: 350px;
+        max-height: 40vh;
         margin: 10px;
+    }
+    
+    .period-group {
+        padding: 10px 12px;
+    }
+    
+    .period-group-title {
+        font-size: 0.8em;
     }
 
     .event-label {
@@ -393,12 +431,26 @@ body {
     }
     
     .timeline-wrapper {
-        height: calc(100vh - 600px);
+        height: 300px;
+        max-height: 35vh;
     }
     
     .period-buttons {
-        max-height: 120px;
+        max-height: 180px;
         overflow-y: auto;
+    }
+    
+    .period-group {
+        padding: 8px 10px;
+    }
+    
+    .period-buttons-row {
+        gap: 6px;
+    }
+    
+    .period-btn {
+        font-size: 0.75em;
+        padding: 6px 10px;
     }
     
     .stats-panel {

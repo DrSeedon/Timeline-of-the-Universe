@@ -64,18 +64,41 @@ export class Timeline {
         this.tooltip.querySelector('.tooltip-year').textContent = `${this.renderer.formatYear(event.year)} • ${periodInfo}`;
         this.tooltip.querySelector('.tooltip-description').textContent = event.desc;
         
+        // Show tooltip to get its dimensions
+        this.tooltip.style.opacity = '0';
+        this.tooltip.style.display = 'block';
+        
         const rect = mouseEvent.target.getBoundingClientRect();
         const containerRect = this.timelineCanvas.getBoundingClientRect();
+        const tooltipWidth = this.tooltip.offsetWidth;
+        const tooltipHeight = this.tooltip.offsetHeight;
         
-        let left = rect.left - containerRect.left + rect.width / 2 - 150;
-        let top = rect.top - containerRect.top - this.tooltip.offsetHeight - 15;
+        // Center horizontally relative to event
+        let left = rect.left - containerRect.left + rect.width / 2 - tooltipWidth / 2;
         
+        // Position above event
+        let top = rect.top - containerRect.top - tooltipHeight - 15;
+        
+        // Keep within horizontal bounds
         if (left < 10) left = 10;
-        if (left + 300 > containerRect.width) left = containerRect.width - 310;
-        if (top < 10) top = rect.bottom - containerRect.top + 15;
+        if (left + tooltipWidth > containerRect.width - 10) {
+            left = containerRect.width - tooltipWidth - 10;
+        }
+        
+        // If doesn't fit above, show below
+        if (top < 10) {
+            top = rect.bottom - containerRect.top + 15;
+        }
+        
+        // If doesn't fit below either, show centered
+        if (top + tooltipHeight > containerRect.height - 10) {
+            top = (containerRect.height - tooltipHeight) / 2;
+        }
         
         this.tooltip.style.left = left + 'px';
         this.tooltip.style.top = top + 'px';
+        this.tooltip.style.opacity = '';
+        this.tooltip.style.display = '';
         this.tooltip.classList.add('visible');
     }
 
@@ -216,18 +239,57 @@ export class Timeline {
     createPeriodButtons(container) {
         container.innerHTML = '';
         
-        historicalPeriods.forEach((period) => {
-            const btn = document.createElement('button');
-            btn.className = 'period-btn';
-            btn.textContent = `${period.icon} ${period.name}`;
+        const groups = [
+            {
+                title: '🌌 Космос и Земля',
+                periods: historicalPeriods.slice(0, 4)
+            },
+            {
+                title: '🦠 Древняя жизнь',
+                periods: historicalPeriods.slice(4, 11)
+            },
+            {
+                title: '🦖 Эра динозавров',
+                periods: historicalPeriods.slice(11, 14)
+            },
+            {
+                title: '🐘 Млекопитающие',
+                periods: historicalPeriods.slice(14, 17)
+            },
+            {
+                title: '🏛️ Цивилизация',
+                periods: historicalPeriods.slice(17, 27)
+            }
+        ];
+        
+        groups.forEach(group => {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'period-group';
             
-            const baseColor = period.color;
-            btn.style.background = `linear-gradient(135deg, ${baseColor} 0%, ${this.adjustColor(baseColor, 30)} 100%)`;
-            btn.style.color = this.getContrastColor(baseColor);
+            const groupTitle = document.createElement('div');
+            groupTitle.className = 'period-group-title';
+            groupTitle.textContent = group.title;
+            groupDiv.appendChild(groupTitle);
             
-            btn.addEventListener('click', () => this.jumpToPeriod(period));
+            const buttonsRow = document.createElement('div');
+            buttonsRow.className = 'period-buttons-row';
             
-            container.appendChild(btn);
+            group.periods.forEach((period) => {
+                const btn = document.createElement('button');
+                btn.className = 'period-btn';
+                btn.textContent = `${period.icon} ${period.name}`;
+                
+                const baseColor = period.color;
+                btn.style.background = `linear-gradient(135deg, ${baseColor} 0%, ${this.adjustColor(baseColor, 30)} 100%)`;
+                btn.style.color = this.getContrastColor(baseColor);
+                
+                btn.addEventListener('click', () => this.jumpToPeriod(period));
+                
+                buttonsRow.appendChild(btn);
+            });
+            
+            groupDiv.appendChild(buttonsRow);
+            container.appendChild(groupDiv);
         });
     }
 
